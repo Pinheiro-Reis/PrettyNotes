@@ -1,16 +1,14 @@
+version: "latest"
 services:
-    db:
-        image: docker.io/bitnami/postgresql:17
-        ports:
-            - "5432:5432"
-        volumes:
-            - "postgresql_data:/bitnami/postgresql"
-        environment:
-            - "ALLOW_EMPTY_PASSWORD=yes"
-
     app:
-        image:
-
-volumes:
-    postgresql_data:
-        driver: local
+        build:
+            context: ./app
+            dockerfile: Dockerfile
+        ports:
+            - "5173:5173"
+        volumes:
+            - ./app:/usr/src/app
+        environment:
+            - NODE_ENV=development
+        working_dir: /usr/src/app
+        command: npm run dev -- --host
