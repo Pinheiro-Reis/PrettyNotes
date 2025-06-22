@@ -1,4 +1,3 @@
-version: "3.9"
 services:
     app:
         build:
@@ -15,6 +14,7 @@ services:
                   target: /usr/src/app
                   ignore:
                       - node_modules/
+                      - dist/
 
                 - action: rebuild
                   path: package.json
