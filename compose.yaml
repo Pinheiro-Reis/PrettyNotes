@@ -6,9 +6,15 @@ services:
             dockerfile: Dockerfile
         ports:
             - "5173:5173"
-        volumes:
-            - ./app:/usr/src/app
-            - /usr/src/app/node_modules
         environment:
             - NODE_ENV=development
-        working_dir: /usr/src/app
+        develop:
+            watch:
+                - action: sync
+                  path: ./app
+                  target: /usr/src/app
+                  ignore:
+                      - node_modules/
+
+                - action: rebuild
+                  path: package.json
