@@ -1,4 +1,22 @@
 services:
+  nginx:
+    restart: always
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    develop:
+      watch:
+        - action: restart
+          path: ./nginx.conf
+
+    depends_on:
+      - app
+    networks:
+      - public
+      - private
+
   app:
     build:
       context: ./app
@@ -17,19 +35,7 @@ services:
         - action: rebuild
           path: package.json
     networks:
-      - public
-
-  web:
-    restart: always
-    image: nginx:latest
-    ports:
-      - "8080:80"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-    depends_on:
-      - app
-    networks:
-      - public
+      - private
 
 networks:
   private:

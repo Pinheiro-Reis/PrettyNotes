@@ -1,1 +1,0 @@
-CREATE DATABASE clothes_shop DEFAULT;
